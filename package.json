@@ -1,0 +1,49 @@
+{
+  "name": "node-typescript-websocket",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "keywords": [
+    "typescript",
+    "node",
+    "nodejs",
+    "websocket"
+  ],
+  "scripts": {
+    "start": "$npm_execpath run build && node ./dist/index.js",
+    "start:dev": "nodemon",
+    "build": "NODE_ENV=production webpack --inline --hot --progress --config webpack.config.js",
+    "lint": "./node_modules/.bin/tslint --project tslint.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JhonatanMedeiros/node-typescript-websocket.git"
+  },
+  "author": {
+    "email": "contato@jhonatanmedeiros.com",
+    "name": "Jhonatan Medeiros",
+    "url": "https://jhonatanmedeiros.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JhonatanMedeiros/node-typescript-websocket/issues"
+  },
+  "homepage": "https://github.com/JhonatanMedeiros/node-typescript-websocket#readme",
+  "dependencies": {
+    "ws": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.5",
+    "@types/ws": "^6.0.1",
+    "nodemon": "^1.19.1",
+    "ts-loader": "^6.0.2",
+    "ts-node": "^8.2.0",
+    "tslint": "^5.17.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-eslint-rules": "^5.4.0",
+    "typescript": "^3.5.1",
+    "webpack": "^4.33.0",
+    "webpack-cli": "^3.3.2",
+    "webpack-node-externals": "^1.7.2"
+  }
+}
