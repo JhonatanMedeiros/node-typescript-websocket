@@ -1,7 +1,13 @@
 import * as WebSocket from 'ws';
+import * as express from 'express';
+import * as http from 'http';
+
+const app = express();
+
+const server = http.createServer(app);
 
 const wss: WebSocket.Server = new WebSocket.Server({
-  port: 8080,
+  server: server,
   perMessageDeflate: {
     zlibDeflateOptions: {
       // See zlib defaults.
@@ -20,10 +26,41 @@ const wss: WebSocket.Server = new WebSocket.Server({
   }
 });
 
-wss.on('connection', (ws) => {
-  ws.on('message', (message) => {
-    console.log('received: %s', message);
-  });
 
-  ws.send('something');
+wss.on('error', err => {
+	console.dir(err);
 });
+
+wss.on('connection', (socket, req) => {
+	console.log('WebSocket client connected...');
+
+	socket.on('error', err => {
+		console.dir(err);
+	});
+
+	socket.on('message', data => {
+		console.log(data);
+		console.log('*** WS ***');
+		console.log();
+    socket.send(`You said: ${data}`);
+    
+    // Broadcast to everyone else.
+    wss.clients.forEach(function each(client) {
+      if (client !== socket && client.readyState === WebSocket.OPEN) {
+        client.send(data);
+      }
+    });
+
+	});
+
+	socket.on('close', () => {
+		console.log('Socket closed');
+	});
+
+});
+
+wss.on('listening', () => {
+	console.log('Listening...');
+});
+
+server.listen(3333);
